@@ -1,0 +1,37 @@
+packages_to_remove:
+  - docker.io
+  - docker-compose
+  - docker-compose-v2
+  - docker-doc
+  - podman-docker
+  - containerd
+  - runc
+
+requirements_packages:
+  - curl
+  - ca-certificates
+
+docker_packages:
+  - docker-ce
+  - docker-ce-cli
+  - containerd.io
+  - docker-buildx-plugin
+  - docker-compose-plugin
+
+
+users: []
+
+services_to_enable:
+  - docker
+  - containerd
+
+registry_mirrors:
+  - "https://docker.mooz.jalinuxy.ir"
+dns:
+  - "8.157.42.100"
+  - "78.157.42.101"
+log_driver: "json-file"
+log_opts:
+  max_size: "20m"
+  max_file: "5"
+  compress: "true"

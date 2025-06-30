@@ -1,0 +1,9 @@
+---
+synapse_server_name: "matrix.local"
+synapse_config_dir: "/home/ali/matrix/synapse/config"
+synapse_data_dir: "/home/ali/matrix/synapse/data"
+synapse_port: 8008
+synapse_data_dir_container: "/data"
+synapse_config_dir_container: "/config"
+synapse_container_name: "synapse"
+synapse_image: "matrixdotorg/synapse:latest"

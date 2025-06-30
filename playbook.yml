@@ -1,0 +1,28 @@
+---
+- hosts: all
+  name: Install docker and configure it
+  become: true
+  gather_facts: yes
+  roles:
+    - docker
+  tags:
+    - matrix
+    - docker
+
+- hosts: all
+  name: Install matrix-synapse
+  become: true
+  roles:
+    - synapse
+  tags:
+    - matrix
+    - synapse
+
+- hosts: all
+  name: Install matrix-element
+  become: true
+  roles:
+    - element
+  tags:
+    - matrix
+    - element

@@ -1,0 +1,21 @@
+{
+  "default_server_config": {
+    "m.homeserver": {
+      "base_url": "{{ element_base_url }}",
+      "server_name": "{{ element_server_name }}"
+    }
+  },
+  "disable_custom_urls": true,
+  "disable_guests": true,
+  "brand": "Internal Chat",
+  "default_theme": "light",
+  "roomDirectory": {
+    "servers": ["{{ element_server_name }}"]
+  },
+  "enable_presence_by_hs_url": {
+    "{{ element_base_url }}": true
+  },
+  "setting_defaults": {
+    "breadcrumbs": true
+  }
+}

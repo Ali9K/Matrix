@@ -1,0 +1,18 @@
+{
+  "registry-mirrors": [
+    {% for mirror in registry_mirrors %}
+    "{{ mirror }}"{% if not loop.last %},{% endif %}
+    {% endfor %}
+  ],
+  "dns": [
+    {% for dns_entry in dns %}
+    "{{ dns_entry }}"{% if not loop.last %},{% endif %}
+    {% endfor %}
+  ],
+  "log-driver": "{{ log_driver }}",
+  "log-opts": {
+    "max-size": "{{ log_opts.max_size }}",
+    "max-file": "{{ log_opts.max_file }}",
+    "compress": "{{ log_opts.compress | lower }}"
+  }
+}

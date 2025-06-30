@@ -1,0 +1,72 @@
+---
+- name: Create Synapse config directory
+  file:
+    path: "{{ synapse_config_dir }}"
+    state: directory
+    mode: '0755'
+    recurse: yes
+  tags:
+  - matrix
+  - synapse
+
+- name: Create Synapse data directory
+  file:
+    path: "{{ synapse_data_dir }}"
+    state: directory
+    mode: '0755'
+    recurse: yes
+  tags:
+  - matrix
+  - synapse
+
+- name: Template homeserver.yaml
+  template:
+    src: homeserver.yaml.j2
+    dest: "{{ synapse_data_dir }}/homeserver.yaml"
+    mode: '0644'
+  tags:
+  - matrix
+  - synapse
+
+- name: Create public network
+  community.docker.docker_network:
+    name: matrix-net
+    driver: bridge
+  tags:
+  - matrix
+  - synapse
+
+- name: Create private network
+  community.docker.docker_network:
+    name: patrix-net
+    driver: bridge
+    internal: yes
+  tags:
+  - matrix
+  - synapse
+
+- name: Pull Synapse Docker image
+  community.docker.docker_image:
+    name: "{{ synapse_image }}"
+    source: pull
+  tags:
+  - matrix
+  - synapse
+
+- name: Run Synapse container
+  community.docker.docker_container:
+    name: "{{ synapse_container_name }}"
+    image: "{{ synapse_image }}"
+    state: started
+    restart_policy: unless-stopped
+    ports:
+      - "{{ synapse_port }}:{{ synapse_port }}"
+    networks:
+      - name: matrix-net
+      - name: patrix-net
+    volumes:
+      - "{{ synapse_config_dir }}:/config"
+      - "{{ synapse_data_dir }}:/data"
+  tags:
+  - matrix
+  - synapse

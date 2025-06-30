@@ -1,0 +1,43 @@
+---
+- name: Create Element config directory
+  file:
+    path: "{{ element_config_dir }}"
+    state: directory
+    mode: '0755'
+    recurse: yes
+  tags:
+  - matrix
+  - element
+
+- name: Template Element config.json
+  template:
+    src: config.json.j2
+    dest: "{{ element_config_dir }}/{{ element_config_file }}"
+    mode: '0644'
+  tags:
+  - matrix
+  - element
+
+- name: Pull element Docker image
+  community.docker.docker_image:
+    name: "{{ element_image }}"
+    source: pull
+  tags:
+  - matrix
+  - element
+
+- name: Run Element container
+  community.docker.docker_container:
+    name: "{{ element_container_name}}"
+    image: "{{ element_image }}"
+    state: started
+    restart_policy: unless-stopped
+    ports:
+      - "{{ element_host_port }}:{{ element_container_port }}"
+    networks:
+      - name: matrix-net
+    volumes:
+      - "{{ element_config_dir }}/{{ element_config_file }}:/app/config.json"
+  tags:
+  - matrix
+  - element

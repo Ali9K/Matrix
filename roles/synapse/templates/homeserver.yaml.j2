@@ -1,0 +1,54 @@
+server_name: "{{ synapse_server_name }}"
+
+pid_file: "/data/homeserver.pid"
+
+listeners:
+  - port: {{ synapse_port }}
+    tls: false             # No TLS for local testing; use Nginx proxy with TLS later
+    type: http
+    x_forwarded: true      # Enable if behind reverse proxy like Nginx
+    resources:
+      - names: [client, federation]
+
+database:
+  name: sqlite3
+  args:
+    database: "{{ synapse_data_dir_container }}/homeserver.db"
+
+logging:
+  version: 1
+  formatters:
+    precise:
+      format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+  handlers:
+    file:
+      class: logging.handlers.RotatingFileHandler
+      filename: "{{ synapse_data_dir_container }}/homeserver.log"
+      maxBytes: 10485760       # 10 MB
+      backupCount: 5
+      formatter: precise
+  root:
+    level: INFO
+    handlers: [file]
+
+report_stats: false          # Disable telemetry reporting for privacy/local use
+
+enable_registration: true    # Allow user registration on local server
+allow_guest_access: false    # Disable guest access (adjust if you want)
+
+# Disable federation to prevent external Matrix servers from connecting
+federation_domain_whitelist: []
+federation_ip_range_blacklist: []
+
+# Optional: media storage location
+media_store_path: "{{ synapse_data_dir_container }}/media_store"
+
+# TLS settings - empty since no TLS on Synapse directly
+tls_certificate_path: ""
+tls_private_key_path: ""
+
+# Uncomment to enable user directory for local users only
+# user_directory_search_all_users: true
+
+macaroon_secret_key: "CHANGE_ME_TO_A_RANDOM_SECRET_KEY"
+enable_registration_without_verification: true
