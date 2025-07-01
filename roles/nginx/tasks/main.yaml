@@ -46,7 +46,7 @@
       - name: matrix-net
       - name: patrix-net
     volumes:
-      - "{{ nginx_config_dir }}/matrix.conf:/etc/nginx/conf.d/matrix.conf:ro"
+      - "{{ nginx_config_dir }}/matrix.conf:/etc/nginx/conf.d/default.conf:ro"
       - "{{ nginx_config_dir }}/{{ nginx_config_file }}:/etc/nginx/nginx.conf:ro"
   tags:
   - matrix
