@@ -1,54 +1,56 @@
+# Server basic config
 server_name: "{{ synapse_server_name }}"
+pid_file: /data/homeserver.pid
 
-pid_file: "/data/homeserver.pid"
-
-listeners:
-  - port: {{ synapse_port }}
-    tls: false             # No TLS for local testing; use Nginx proxy with TLS later
-    type: http
-    x_forwarded: true      # Enable if behind reverse proxy like Nginx
-    resources:
-      - names: [client, federation]
-
+# Data storage with SQLite
 database:
   name: sqlite3
   args:
-    database: "{{ synapse_data_dir_container }}/homeserver.db"
+    database: /data/homeserver.db
 
-logging:
-  version: 1
-  formatters:
-    precise:
-      format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-  handlers:
-    file:
-      class: logging.handlers.RotatingFileHandler
-      filename: "{{ synapse_data_dir_container }}/homeserver.log"
-      maxBytes: 10485760       # 10 MB
-      backupCount: 5
-      formatter: precise
-  root:
-    level: INFO
-    handlers: [file]
 
-report_stats: false          # Disable telemetry reporting for privacy/local use
-
-enable_registration: true    # Allow user registration on local server
-allow_guest_access: false    # Disable guest access (adjust if you want)
-
-# Disable federation to prevent external Matrix servers from connecting
-federation_domain_whitelist: []
-federation_ip_range_blacklist: []
-
-# Optional: media storage location
-media_store_path: "{{ synapse_data_dir_container }}/media_store"
-
-# TLS settings - empty since no TLS on Synapse directly
+# TLS disabled (handled by NGINX reverse proxy)
 tls_certificate_path: ""
 tls_private_key_path: ""
+no_tls: true
 
-# Uncomment to enable user directory for local users only
-# user_directory_search_all_users: true
+# Listeners
+listeners:
+  - port: 8008
+    type: http
+    tls: false
+    bind_addresses: ['0.0.0.0']
+    resources:
+      - names: [client, federation]
+        compress: true
 
-macaroon_secret_key: "CHANGE_ME_TO_A_RANDOM_SECRET_KEY"
+# Public base URL (used by Element and links)
+public_baseurl: "https://{{ synapse_server_name }}/"
+
+# TURN Server (Coturn)
+turn_uris:
+  - "turn:matrix.local?transport=udp"
+  - "turn:matrix.local?transport=tcp"
+turn_shared_secret: "{{ coturn_password }}"
+turn_user_lifetime: 86400000
+turn_allow_guests: true
+
+# Registration
+enable_registration: true
+
+# Trusted Key Servers (default is matrix.org)
+trusted_key_servers:
+  - server_name: "{{ synapse_server_name }}"
+
+# Media config
+media_store_path: /data/media_store
+
+# Appservice & Integration
+enable_search: true
+enable_metrics: true
+
+# Enable or disable sending anonymous usage stats to the Matrix project
+report_stats: false
+
+macaroon_secret_key: "{{ random_secret_key }}"
 enable_registration_without_verification: true

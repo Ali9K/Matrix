@@ -1,3 +1,11 @@
-#SPDX-License-Identifier: MIT-0
 ---
-# defaults file for coturn
+coturn_listen_port: 3478
+coturn_tls_listen_port: 5349
+coturn_password: turnpassword
+coturn_realm: matrix.local
+coturn_external_ip: "127.0.0.1"  
+
+coturn_config_dir: /home/ali/matrix/coturn/config
+coturn_config_file: turnserver.conf
+coturn_image: coturn/coturn:latest
+coturn_container_name: coturn

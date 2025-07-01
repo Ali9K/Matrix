@@ -17,7 +17,7 @@ Deploy a fully self-contained Matrix-based messenger stack (Synapse, Element, Co
 
 ## 📁 Project Structure
 
-- [ ] Create base project structure:
+- [x] Create base project structure:
 
 
 ---
@@ -27,10 +27,10 @@ Deploy a fully self-contained Matrix-based messenger stack (Synapse, Element, Co
 - [x] Create inventory file (`hosts.yml`)
 - [x] Define all roles:
 - [x] `docker` – install Docker
-- [ ] `nginx` – deploy Nginx container with proper config
-- [ ] `coturn` – configure and run Coturn for VoIP
-- [ ] `synapse` – deploy Synapse server using Docker
-- [ ] `element` – deploy Element client container
+- [x] `nginx` – deploy Nginx container with proper config
+- [x] `coturn` – configure and run Coturn for VoIP
+- [x] `synapse` – deploy Synapse server using Docker
+- [x] `element` – deploy Element client container
 
 ---
 
@@ -46,8 +46,8 @@ Deploy a fully self-contained Matrix-based messenger stack (Synapse, Element, Co
 
 ## 🌐 Role: Nginx
 
-- [ ] Write a `nginx.conf.j2` template
-- [ ] Configure reverse proxy for:
+- [x] Write a `nginx.conf.j2` template
+- [x] Configure reverse proxy for:
 - `/_matrix`
 - `/.well-known/matrix/client`
 - `/element`
@@ -57,9 +57,9 @@ Deploy a fully self-contained Matrix-based messenger stack (Synapse, Element, Co
 
 ## 📞 Role: Coturn
 
-- [ ] Create turnserver.conf template
-- [ ] Expose port `3478` (UDP & TCP)
-- [ ] Run Docker container for coturn
+- [x] Create turnserver.conf template
+- [x] Expose port `3478` (UDP & TCP)
+- [x] Run Docker container for coturn
 
 ---
 

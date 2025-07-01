@@ -1,0 +1,23 @@
+listening-port={{ coturn_listen_port }}
+tls-listening-port={{ coturn_tls_listen_port }}
+
+fingerprint
+lt-cred-mech
+use-auth-secret
+static-auth-secret={{ coturn_password }}
+realm={{ coturn_realm }}
+
+log-file=stdout
+no-file-log
+simple-log
+total-quota=100
+bps-capacity=0
+stale-nonce=600
+
+listening-ip=0.0.0.0
+
+external-ip={{ coturn_external_ip }}
+
+no-multicast-peers
+no-cli
+no-loopback-peers

@@ -26,3 +26,21 @@
   tags:
     - matrix
     - element
+
+- hosts: all
+  name: Install matrix-coturn
+  become: true
+  roles:
+    - coturn
+  tags:
+    - matrix
+    - coturn
+
+- hosts: all
+  name: Install matrix-nginx
+  become: true
+  roles:
+    - nginx
+  tags:
+    - matrix
+    - nginx

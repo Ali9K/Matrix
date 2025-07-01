@@ -7,3 +7,5 @@ synapse_data_dir_container: "/data"
 synapse_config_dir_container: "/config"
 synapse_container_name: "synapse"
 synapse_image: "matrixdotorg/synapse:latest"
+coturn_password: "turnpassword"
+random_secret_key: 28c8951b2a2daf1af5cec8d8d883d05e3cdb7620f4853cebe6e818206aa89b85

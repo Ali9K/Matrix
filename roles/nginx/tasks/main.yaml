@@ -1,0 +1,53 @@
+---
+- name: Create nginx config directory
+  file:
+    path: "{{ nginx_config_dir }}"
+    state: directory
+    mode: '0755'
+    recurse: yes
+  tags:
+  - matrix
+
+- name: Template Nginx matrix.conf.j2
+  template:
+    src: matrix.conf.j2
+    dest: "{{ nginx_config_dir }}/matrix.conf"
+    mode: '0644'
+  tags:
+  - matrix
+  - nginx
+
+- name: Template Nginx nginx.conf.j2
+  template:
+    src: nginx.conf.j2
+    dest: "{{ nginx_config_dir }}/{{ nginx_config_file }}"
+    mode: '0644'
+  tags:
+  - matrix
+  - nginx
+
+- name: Pull Nginx Docker image
+  community.docker.docker_image:
+    name: "{{ nginx_image }}"
+    source: pull
+  tags:
+  - matrix
+  - nginx
+
+- name: Run Nginx container
+  community.docker.docker_container:
+    name: "{{ nginx_container_name}}"
+    image: "{{ nginx_image }}"
+    state: started
+    restart_policy: unless-stopped
+    ports:
+      - "{{ nginx_host_port }}:{{ nginx_container_port }}"
+    networks:
+      - name: matrix-net
+      - name: patrix-net
+    volumes:
+      - "{{ nginx_config_dir }}/matrix.conf:/etc/nginx/conf.d/matrix.conf:ro"
+      - "{{ nginx_config_dir }}/{{ nginx_config_file }}:/etc/nginx/nginx.conf:ro"
+  tags:
+  - matrix
+  - nginx

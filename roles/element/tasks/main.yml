@@ -35,7 +35,7 @@
     ports:
       - "{{ element_host_port }}:{{ element_container_port }}"
     networks:
-      - name: matrix-net
+      - name: patrix-net
     volumes:
       - "{{ element_config_dir }}/{{ element_config_file }}:/app/config.json"
   tags:

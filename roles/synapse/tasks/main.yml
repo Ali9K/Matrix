@@ -62,7 +62,6 @@
     ports:
       - "{{ synapse_port }}:{{ synapse_port }}"
     networks:
-      - name: matrix-net
       - name: patrix-net
     volumes:
       - "{{ synapse_config_dir }}:/config"
