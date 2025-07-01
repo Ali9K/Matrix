@@ -17,8 +17,9 @@ This roadmap guides the deployment of a self-hosted Matrix server stack with Syn
 
 ## 🐳 Phase 2: Install Dependencies
 
-- [ ] Install Docker
-- [ ] Install Docker Compose (or set up Ansible for orchestration)
+- [x] Install Docker
+- [x] Install Docker Compose
+- [ ] Install Ansible
 - [ ] Install NGINX
 - [ ] Install Certbot (`sudo apt install certbot python3-certbot-nginx`)
 
