@@ -10,6 +10,34 @@
     - docker
 
 - hosts: all
+  tasks:
+    - name: Create public network
+      community.docker.docker_network:
+        name: matrix-net
+        driver: bridge
+      tags:
+        - matrix
+        - public-network
+
+    - name: Create private network
+      community.docker.docker_network:
+        name: patrix-net
+        driver: bridge
+        internal: yes
+      tags:
+        - matrix
+        - private-network
+
+- hosts: all
+  name: Install matrix-coturn
+  become: true
+  roles:
+    - coturn
+  tags:
+    - matrix
+    - coturn
+    
+- hosts: all
   name: Install matrix-synapse
   become: true
   roles:
@@ -27,14 +55,6 @@
     - matrix
     - element
 
-- hosts: all
-  name: Install matrix-coturn
-  become: true
-  roles:
-    - coturn
-  tags:
-    - matrix
-    - coturn
 
 - hosts: all
   name: Install matrix-nginx

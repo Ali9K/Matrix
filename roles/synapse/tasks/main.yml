@@ -28,23 +28,6 @@
   - matrix
   - synapse
 
-- name: Create public network
-  community.docker.docker_network:
-    name: matrix-net
-    driver: bridge
-  tags:
-  - matrix
-  - synapse
-
-- name: Create private network
-  community.docker.docker_network:
-    name: patrix-net
-    driver: bridge
-    internal: yes
-  tags:
-  - matrix
-  - synapse
-
 - name: Pull Synapse Docker image
   community.docker.docker_image:
     name: "{{ synapse_image }}"
