@@ -1,6 +1,6 @@
 server {
     listen 80;
-    server_name localhost;
+    server_name {{ matrix_domain }};
 
     location / {
         proxy_pass http://element:80;

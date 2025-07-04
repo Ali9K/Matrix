@@ -5,5 +5,5 @@ element_image: vectorim/element-web:latest
 element_container_name: element
 element_host_port: 8080
 element_container_port: 80
-element_base_url: http://localhost:1234
-element_server_name: matrix.local
+element_base_url: http://chat.jalinuxy.ir:80
+element_server_name: chat.jalinuxy.ir

@@ -11,8 +11,8 @@
   "turn_servers": [
     {
       "urls": [
-        "turn:matrix.local?transport=udp",
-        "turn:matrix.local?transport=tcp"
+        "turn:{{ element_server_name }}?transport=udp",
+        "turn:{{ element_server_name }}?transport=tcp"
       ],
       "secret": "{{ coturn_password }}",
       "expiry": 86400000

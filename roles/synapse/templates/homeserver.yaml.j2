@@ -29,8 +29,8 @@ public_baseurl: "https://{{ synapse_server_name }}/"
 
 # TURN Server (Coturn)
 turn_uris:
-  - "turn:matrix.local?transport=udp"
-  - "turn:matrix.local?transport=tcp"
+  - "turn:{{ synapse_server_name }}?transport=udp"
+  - "turn:{{ synapse_server_name }}?transport=tcp"
 turn_shared_secret: "{{ coturn_password }}"
 turn_user_lifetime: 86400000
 turn_allow_guests: true
