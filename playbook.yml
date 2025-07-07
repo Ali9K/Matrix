@@ -38,6 +38,15 @@
     - coturn
     
 - hosts: all
+  name: TLS with certbot
+  become: true
+  roles:
+    - certbot-tls
+  tags:
+    -matrix
+    - certbot-tls
+    
+- hosts: all
   name: Install matrix-synapse
   become: true
   roles:

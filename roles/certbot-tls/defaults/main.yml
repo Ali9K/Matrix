@@ -1,0 +1,7 @@
+---
+certbot_packages: 
+  - certbot
+  - python3-certbot-nginx
+domain: "chat.devopshq.ir"
+certbot_email: "ali99kalbasi82@gmail.com"
+certbot_webroot: "/var/www/certbot"

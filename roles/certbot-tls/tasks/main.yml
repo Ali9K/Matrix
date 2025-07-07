@@ -1,0 +1,34 @@
+---
+- name: Install certbot
+  apt:
+    name: "{{ item}}"
+    state: present
+    update_cache: yes
+  loop: "{{ certbot_packages }}"
+  tags:
+    - matrix
+    - certbot-tls
+
+- name: Create certbot webroot dir
+  file:
+    path: "{{ certbot_webroot }}"
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: '0755'
+  tags:
+    - matrix
+    - certbot-tls
+
+- name: Obtain TLS certificate using webroot
+  command: >
+    certbot certonly --webroot
+    --webroot-path {{ certbot_webroot }}
+    --non-interactive --agree-tos
+    -m {{ certbot_email }}
+    -d {{ domain }}
+  args:
+    creates: "/etc/letsencrypt/live/{{ domain }}/fullchain.pem"
+  tags:
+    - matrix
+    - certbot-tls

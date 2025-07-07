@@ -17,15 +17,6 @@
   - matrix
   - nginx
 
-- name: Template Nginx nginx.conf.j2
-  template:
-    src: nginx.conf.j2
-    dest: "{{ nginx_config_dir }}/{{ nginx_config_file }}"
-    mode: '0644'
-  tags:
-  - matrix
-  - nginx
-
 - name: Pull Nginx Docker image
   community.docker.docker_image:
     name: "{{ nginx_image }}"
@@ -47,7 +38,8 @@
       - name: patrix-net
     volumes:
       - "{{ nginx_config_dir }}/matrix.conf:/etc/nginx/conf.d/default.conf:ro"
-      - "{{ nginx_config_dir }}/{{ nginx_config_file }}:/etc/nginx/nginx.conf:ro"
+      - "/etc/letsencrypt/live/{{ matrix_domain }}/fullchain.pem:/etc/ssl/certs/fullchain.pem:ro"
+      - "/etc/letsencrypt/live/{{ matrix_domain }}/privkey.pem:/etc/ssl/private/privkey.pem:ro"
   tags:
   - matrix
   - nginx

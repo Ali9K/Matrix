@@ -1,7 +1,7 @@
 ---
-synapse_server_name: "chat.jalinuxy.ir"
 synapse_config_dir: "~/matrix/synapse/config"
 synapse_data_dir: "~/matrix/synapse/data"
+synapse_server_name: "chat.jalinuxy.ir"
 synapse_port: 8008
 synapse_data_dir_container: "/data"
 synapse_config_dir_container: "/config"

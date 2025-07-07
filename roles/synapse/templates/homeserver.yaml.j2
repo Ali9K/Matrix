@@ -10,8 +10,8 @@ database:
 
 
 # TLS disabled (handled by NGINX reverse proxy)
-tls_certificate_path: ""
-tls_private_key_path: ""
+tls_certificate_path: "/etc/ssl/certs/fullchain.pem"
+tls_private_key_path: "/etc/ssl/private/privkey.pem"
 no_tls: true
 
 # Listeners

@@ -49,6 +49,8 @@
     volumes:
       - "{{ synapse_config_dir }}:/config"
       - "{{ synapse_data_dir }}:/data"
+      - "/etc/letsencrypt/live/{{ synapse_server_name }}/fullchain.pem:/etc/ssl/certs/fullchain.pem:ro"
+      - "/etc/letsencrypt/live/{{ synapse_server_name }}/privkey.pem:/etc/ssl/private/privkey.pem:ro"
   tags:
   - matrix
   - synapse

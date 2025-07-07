@@ -1,6 +1,5 @@
-nginx_config_dir: /home/ali/matrix/nginx
-nginx_config_file: nginx.conf
-nginx_image: nginx:latest
+nginx_config_dir: ~/matrix/nginx
+nginx_image: nginx:1.29.0
 nginx_container_name: nginx-matrix
 nginx_host_port: 80
 nginx_container_port: 80
