@@ -2,6 +2,6 @@
 certbot_packages: 
   - certbot
   - python3-certbot-nginx
-domain: "chat.devopshq.ir"
-certbot_email: "ali99kalbasi82@gmail.com"
+domain: "matrix.local.com"
+certbot_email: "matrix9admin@gmail.com"
 certbot_webroot: "/var/www/certbot"

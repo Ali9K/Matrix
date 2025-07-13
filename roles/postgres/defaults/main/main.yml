@@ -1,0 +1,7 @@
+---
+postgres_image: postgres:15
+postgres_name: db-synapse
+postgres_user: synapse
+synapse_db_user: synapse
+synapse_db_name: synapse
+postgres_dir_path: /matrix/postgres

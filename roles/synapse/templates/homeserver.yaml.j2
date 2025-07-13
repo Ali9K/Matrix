@@ -2,16 +2,18 @@
 server_name: "{{ synapse_server_name }}"
 pid_file: /data/homeserver.pid
 
-# Data storage with SQLite
+# Data storage with Postgres
 database:
-  name: sqlite3
+  name: psycopg2
   args:
-    database: /data/homeserver.db
+    user: "{{ postgres_user }}"
+    password: "{{ synapse_db_password }}"
+    database: synapse
+    host: "{{ db_name }}"
+    cp_min: 5
+    cp_max: 10
 
-
-# TLS disabled (handled by NGINX reverse proxy)
-tls_certificate_path: "/etc/ssl/certs/fullchain.pem"
-tls_private_key_path: "/etc/ssl/private/privkey.pem"
+# TLS disabled (handled by web-server reverse proxy)
 no_tls: true
 
 # Listeners
@@ -36,11 +38,13 @@ turn_user_lifetime: 86400000
 turn_allow_guests: true
 
 # Registration
-enable_registration: true
+enable_registration: false
+enable_registration_without_verification: false
+registration_shared_secret: "{{ registration_secret }}"
 
-# Trusted Key Servers (default is matrix.org)
+# Trusted Key Servers
 trusted_key_servers:
-  - server_name: "{{ synapse_server_name }}"
+  - server_name: "matrix.org"
 
 # Media config
 media_store_path: /data/media_store
@@ -48,9 +52,18 @@ media_store_path: /data/media_store
 # Appservice & Integration
 enable_search: true
 enable_metrics: true
-
-# Enable or disable sending anonymous usage stats to the Matrix project
 report_stats: false
 
 macaroon_secret_key: "{{ random_secret_key }}"
-enable_registration_without_verification: true
+form_secret: "{{ form_secret }}"
+signing_key_path: "/data/synapse.signing.key"
+
+# Rate limiting
+rc_messages_per_second: 0.2
+rc_message_burst_count: 10
+
+federation_rc_window_size: 10000
+federation_rc_sleep_limit: 10
+federation_rc_sleep_delay: 500
+federation_rc_reject_limit: 50
+federation_rc_concurrent: 3

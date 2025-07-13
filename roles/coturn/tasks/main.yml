@@ -6,8 +6,8 @@
     mode: '0755'
     recurse: yes
   tags:
-  - matrix
-  - coturn
+    - matrix
+    - coturn
 
 - name: Template Coturn coturn.conf
   template:
@@ -15,31 +15,28 @@
     dest: "{{ coturn_config_dir }}/{{ coturn_config_file }}"
     mode: '0644'
   tags:
-  - matrix
-  - coturn
+    - matrix
+    - coturn
 
 - name: Pull Coturn Docker image
   community.docker.docker_image:
     name: "{{ coturn_image }}"
     source: pull
   tags:
-  - matrix
-  - coturn
+    - matrix
+    - coturn
 
 - name: Run Coturn container
   community.docker.docker_container:
-    name: "{{ coturn_container_name}}"
+    name: "{{ coturn_container_name }}"
     image: "{{ coturn_image }}"
     state: started
     restart_policy: unless-stopped
-    ports:
-      - "{{ coturn_listen_port }}:3478/udp"
-      - "{{ coturn_tls_listen_port }}:5349/tcp"
     networks:
       - name: patrix-net
     volumes:
       - "{{ coturn_config_dir }}/{{ coturn_config_file }}:/etc/coturn/turnserver.conf:ro"
     command: ["-c", "/etc/coturn/turnserver.conf"]
   tags:
-  - matrix
-  - coturn
+    - matrix
+    - coturn

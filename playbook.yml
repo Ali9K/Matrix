@@ -1,15 +1,5 @@
 ---
 - hosts: all
-  name: Install docker and configure it
-  become: true
-  gather_facts: yes
-  roles:
-    - docker
-  tags:
-    - matrix
-    - docker
-
-- hosts: all
   tasks:
     - name: Create public network
       community.docker.docker_network:
@@ -27,7 +17,7 @@
       tags:
         - matrix
         - private-network
-
+    
 - hosts: all
   name: Install matrix-coturn
   become: true
@@ -36,15 +26,15 @@
   tags:
     - matrix
     - coturn
-    
+
 - hosts: all
-  name: TLS with certbot
+  name: Postgres for Synapse
   become: true
   roles:
-    - certbot-tls
+    - postgres
   tags:
-    -matrix
-    - certbot-tls
+    - matrix
+    - postgres
     
 - hosts: all
   name: Install matrix-synapse
@@ -64,7 +54,6 @@
     - matrix
     - element
 
-
 - hosts: all
   name: Install matrix-nginx
   become: true
@@ -73,3 +62,12 @@
   tags:
     - matrix
     - nginx
+
+- hosts: all
+  name: TLS with certbot
+  become: true
+  roles:
+    - certbot-tls
+  tags:
+    - matrix
+    - certbot-tls

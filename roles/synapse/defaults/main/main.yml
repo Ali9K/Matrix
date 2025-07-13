@@ -1,9 +1,8 @@
 ---
-synapse_config_dir: "~/matrix/synapse/config"
-synapse_data_dir: "~/matrix/synapse/data"
-synapse_server_name: "chat.jalinuxy.ir"
-synapse_port: 8008
-synapse_data_dir_container: "/data"
-synapse_config_dir_container: "/config"
+synapse_config_dir: "/matrix/synapse/config"
+synapse_data_dir: "/matrix/synapse/data"
+synapse_server_name: "matrix.local.com"
 synapse_container_name: "synapse"
 synapse_image: "matrixdotorg/synapse:latest"
+db_name: db-synapse
+postgres_user: synapse

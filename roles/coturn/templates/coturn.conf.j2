@@ -8,9 +8,10 @@ static-auth-secret={{ coturn_password }}
 realm={{ coturn_realm }}
 
 log-file=stdout
-no-file-log
 simple-log
+
 total-quota=100
+user-quota=12
 bps-capacity=0
 stale-nonce=600
 
@@ -18,6 +19,8 @@ listening-ip=0.0.0.0
 
 external-ip={{ coturn_external_ip }}
 
+# Security
 no-multicast-peers
 no-cli
-no-loopback-peers
+no-software-attribute
+denied-peer-ip=0.0.0.0-255.255.255.255

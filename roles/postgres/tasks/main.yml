@@ -1,0 +1,57 @@
+- name: Create Docker volume for PostgreSQL data
+  community.docker.docker_volume:
+    name: db_data
+    state: present
+  tags:
+    - matrix
+    - postgres
+    - db-volume
+
+- name: Create Postgres config directory
+  file:
+    path: "{{ postgres_dir_path }}"
+    state: directory
+    mode: '0755'
+    recurse: yes
+  tags:
+  - matrix
+  - postgres
+  - postgres-db
+
+- name: Copy DB init SQL template
+  template:
+    src: init-db.sql.j2
+    dest: "{{ postgres_dir_path }}/init-db.sql"
+  tags:
+    - matrix
+    - postgres
+    - db-init-sql
+
+- name: Pull Postgres Docker image
+  community.docker.docker_image:
+    name: "{{ postgres_image }}"
+    source: pull
+  tags:
+    - matrix
+    - postgres
+    - db-pull-image
+
+- name: Run Postgres container
+  community.docker.docker_container:
+    name: "{{ postgres_name }}"
+    image: "{{ postgres_image }}"
+    state: started
+    restart_policy: unless-stopped
+    env:
+      POSTGRES_USER: "{{ synapse_db_user }}"
+      POSTGRES_PASSWORD: "{{ synapse_db_password }}"
+      POSTGRES_INITDB_ARGS: "--locale=C --encoding=UTF8"
+    volumes:
+      - "db_data:/var/lib/postgresql/data"
+      - "{{ playbook_dir }}/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro"
+    networks:
+      - name: patrix-net
+  tags:
+    - matrix
+    - postgres
+    - db-container

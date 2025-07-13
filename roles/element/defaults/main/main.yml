@@ -1,9 +1,7 @@
 ---
-element_config_dir: ~/matrix/element/config
+element_config_dir: /matrix/element/config
 element_config_file: config.json
 element_image: vectorim/element-web:latest
 element_container_name: element
-element_host_port: 8080
-element_container_port: 80
-element_base_url: http://chat.jalinuxy.ir:80
-element_server_name: chat.jalinuxy.ir
+synapse_server_url: "https://matrix.local.com"
+synapse_server_name: matrix.local.com

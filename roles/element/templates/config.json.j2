@@ -1,18 +1,19 @@
 {
   "default_server_config": {
     "m.homeserver": {
-      "base_url": "{{ element_base_url }}",
-      "server_name": "{{ element_server_name }}"
+      "base_url": "{{ synapse_server_url }}",
+      "server_name": "{{ synapse_server_name }}"
     },
     "m.identity_server": {
-      "base_url": "https://vector.im"
+      "base_url": null
     }
   },
   "turn_servers": [
     {
       "urls": [
-        "turn:{{ element_server_name }}?transport=udp",
-        "turn:{{ element_server_name }}?transport=tcp"
+        "turn:{{ synapse_server_name }}?transport=udp",
+        "turn:{{ synapse_server_name }}?transport=tcp",
+        "turns:{{ synapse_server_name }}?transport=tcp"
       ],
       "secret": "{{ coturn_password }}",
       "expiry": 86400000

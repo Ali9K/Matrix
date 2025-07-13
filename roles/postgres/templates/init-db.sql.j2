@@ -1,0 +1,8 @@
+CREATE USER {{ synapse_db_user }} WITH PASSWORD '{{ synapse_db_password }}';
+
+CREATE DATABASE {{ synapse_db_name }}
+  ENCODING 'UTF8'
+  LC_COLLATE='C'
+  LC_CTYPE='C'
+  TEMPLATE=template0
+  OWNER {{ synapse_db_user }};

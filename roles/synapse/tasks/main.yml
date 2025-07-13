@@ -42,15 +42,11 @@
     image: "{{ synapse_image }}"
     state: started
     restart_policy: unless-stopped
-    ports:
-      - "{{ synapse_port }}:{{ synapse_port }}"
     networks:
       - name: patrix-net
     volumes:
-      - "{{ synapse_config_dir }}:/config"
-      - "{{ synapse_data_dir }}:/data"
-      - "/etc/letsencrypt/live/{{ synapse_server_name }}/fullchain.pem:/etc/ssl/certs/fullchain.pem:ro"
-      - "/etc/letsencrypt/live/{{ synapse_server_name }}/privkey.pem:/etc/ssl/private/privkey.pem:ro"
+      - "{{ synapse_config_dir }}:/config:rw"
+      - "{{ synapse_data_dir }}:/data:rw"
   tags:
   - matrix
   - synapse

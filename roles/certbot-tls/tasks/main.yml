@@ -3,7 +3,7 @@
   apt:
     name: "{{ item}}"
     state: present
-    update_cache: yes
+    # update_cache: yes
   loop: "{{ certbot_packages }}"
   tags:
     - matrix
@@ -25,10 +25,18 @@
     certbot certonly --webroot
     --webroot-path {{ certbot_webroot }}
     --non-interactive --agree-tos
-    -m {{ certbot_email }}
+    --email {{ certbot_email }}
     -d {{ domain }}
   args:
     creates: "/etc/letsencrypt/live/{{ domain }}/fullchain.pem"
+  tags:
+    - matrix
+    - certbot-tls
+
+- name: Reload Nginx
+  ansible.builtin.service:
+    name: nginx
+    state: reloaded
   tags:
     - matrix
     - certbot-tls

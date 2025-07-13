@@ -1,9 +1,9 @@
 ---
-coturn_listen_port: 3478
-coturn_tls_listen_port: 5349
-coturn_realm: chat.jalinuxy.ir
-coturn_external_ip: "31.7.78.142"  
-coturn_config_dir: ~/matrix/coturn/config
+coturn_external_ip: "127.0.0.1"  
+coturn_config_dir: /matrix/coturn/config
 coturn_config_file: turnserver.conf
 coturn_image: coturn/coturn:4.7.0
 coturn_container_name: coturn
+coturn_listen_port: 3478
+coturn_tls_listen_port: 5349
+coturn_realm: matrix.local.com
