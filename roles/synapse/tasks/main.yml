@@ -23,7 +23,8 @@
   template:
     src: homeserver.yaml.j2
     dest: "{{ synapse_data_dir }}/homeserver.yaml"
-    mode: '0644'
+    owner: 991
+    group: 991
   tags:
   - matrix
   - synapse

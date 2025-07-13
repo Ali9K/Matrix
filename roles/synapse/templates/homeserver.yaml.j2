@@ -67,3 +67,20 @@ federation_rc_sleep_limit: 10
 federation_rc_sleep_delay: 500
 federation_rc_reject_limit: 50
 federation_rc_concurrent: 3
+
+# SMTP
+email:
+  enable_notifs: true
+
+smtp_host: smtp.gmail.com
+smtp_port: 587
+smtp_user: "{{ smtp_user }}"
+smtp_pass: "{{ smtp_pass }}"
+require_transport_security: true
+
+notif_from: "Matrix Server <{{ smtp_user }}>"
+app_name: "Matrix"
+email_subjects:
+  password_reset: "Password reset for %(app)s"
+  email_validation: "Verify your email for %(app)s"
+  registration: "Welcome to %(app)s"
