@@ -6,3 +6,5 @@ synapse_container_name: "synapse"
 synapse_image: "matrixdotorg/synapse:latest"
 db_name: db-synapse
 postgres_user: synapse
+
+smtp_user: alch@gmail.com
