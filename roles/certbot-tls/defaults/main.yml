@@ -2,6 +2,6 @@
 certbot_packages: 
   - certbot
   - python3-certbot-nginx
-domain: "matrix.local.com"
+domain: "matrix.alch.com"
 certbot_email: "alch@gmail.com"
 certbot_webroot: "/var/www/certbot"
