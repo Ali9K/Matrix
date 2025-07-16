@@ -4,24 +4,18 @@ services:
     restart: unless-stopped
     environment:
       - APP_PORT=3000
-      - MATRIX_HOMESERVER_URL=https://chat.jalinuxy.ir
-      - MATRIX_ACCESS_TOKEN=syt_YWxlcnRtYW5hZ2Vy_UUDodwarAXBhXZZmHwil_3TNUoX
-      - MATRIX_ROOM_ID=!yJeJfYCqjQfUGnDULG:chat.jalinuxy.ir
-      - APP_ALERTMANAGER_SECRET=awUHvIw4zNmyKoxEOdsNOPvm3e0hLAp4v1XjHCTNrpeqWN3AkoBChzPhUf0iaCji
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.webhook.rule=Host(`chat.jalinuxy.ir`) && PathPrefix(`/alert`)"
-      - "traefik.http.routers.webhook.entrypoints=web-secure"
-      - "traefik.http.routers.webhook.tls.certresolver=le"
-      - "traefik.http.services.webhook.loadbalancer.server.port=3000"
+      - MATRIX_HOMESERVER_URL=${MATRIX_HOMESERVER_URL}
+      - MATRIX_ACCESS_TOKEN=${MATRIX_ACCESS_TOKEN}
+      - MATRIX_ROOM_ID=${MATRIX_ROOM_ID}
+      - APP_ALERTMANAGER_SECRET=${APP_ALERTMANAGER_SECRET}
     networks:
-      - app-network
-      - web-network
+      - matrix-net
+      - patrix-net
 
 networks:
   web-network:
     external: true
-    name: web-network
+    name: matrix-net
   app-network:
     external: true
-    name: app-network
+    name: patrix-net
