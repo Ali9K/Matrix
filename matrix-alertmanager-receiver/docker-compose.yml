@@ -1,5 +1,6 @@
 services:
   matrix-webhook:
+    container_name: webhook
     build: .
     restart: unless-stopped
     environment:
