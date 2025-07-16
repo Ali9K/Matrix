@@ -32,8 +32,6 @@
     image: "{{ element_image }}"
     state: started
     restart_policy: unless-stopped
-    # ports:
-    #   - "{{ element_host_port }}:{{ element_container_port }}"
     networks:
       - name: patrix-net
     volumes:
