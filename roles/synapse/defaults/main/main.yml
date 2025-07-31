@@ -8,3 +8,10 @@ db_name: db-synapse
 postgres_user: synapse
 
 smtp_user: alch@gmail.com
+
+coturn_password: "yourpass"
+random_secret_key: yourRandomSecretPass
+synapse_db_password: "dbpass"
+registration_secret: createit
+form_secret: createit
+smtp_pass: smtpPass

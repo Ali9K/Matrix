@@ -5,3 +5,5 @@ element_image: vectorim/element-web:latest
 element_container_name: element
 synapse_server_url: "https://matrix.alch.com"
 synapse_server_name: matrix.alch.com
+
+coturn_password: yourpass

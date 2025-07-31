@@ -1,111 +1,77 @@
-# TODO: Self-Hosted Matrix Messenger with Ansible + Docker
+# Matrix Stack Deployment with Ansible & Docker
 
-## Goal:
-Deploy a fully self-contained Matrix-based messenger stack (Synapse, Element, Coturn, Nginx) using Ansible and Docker, suitable for use in internal networks even when internet access is restricted.
+This repository contains an Ansible collection that fully deploys a containerized Matrix stack using Docker.
+The included roles and tasks are executed in the following order:
 
----
+* Two initial tasks in playbook.yml to create Docker public and private networks
+* Coturn, a TURN server for voice and video calls (TCP enabled for better connectivity in restrictive networks such as Iran)
+* PostgreSQL, used as the database for Synapse
+* Synapse, the Matrix homeserver backend
+* Element, the web-based Matrix client
+* NGINX, serving as a reverse proxy
+* Certbot, to obtain TLS certificates via Let's Encrypt
 
-## Pre-requisites
-
-- [ ] VPS or local server (with root or sudo access)
-- [ ] A local/internal domain (e.g. `chat.local` or `matrix.mycompany.ir`)
-- [ ] Ansible installed on the control machine
-- [ ] Python Docker SDK installed (`pip install docker`)
-- [ ] SSH access to target machine
-
----
-
-## 📁 Project Structure
-
-- [x] Create base project structure:
-
+All components are deployed in isolated Docker containers and are configured to work seamlessly together out of the box.
 
 ---
 
-## 🔧 Ansible Setup
+## Requirements
 
-- [x] Create inventory file (`hosts.yml`)
-- [x] Define all roles:
-- [x] `docker` – install Docker
-- [x] `nginx` – deploy Nginx container with proper config
-- [x] `coturn` – configure and run Coturn for VoIP
-- [x] `synapse` – deploy Synapse server using Docker
-- [x] `element` – deploy Element client container
+* Ansible
+* Docker
+* Python
 
 ---
 
-## 📦 Role: docker
+## Getting Started
 
-- [x] Requirements
-- [x] Set dns
-- [x] Install Docker
-- [x] Set registery mirror
-- [x] Configuration
+This project is designed to run Ansible on the local environment by default.
+However, you can easily modify the hosts.yml file to deploy it on any host or even across multiple hosts.
 
----
+Each role and task is tagged, allowing you to selectively run parts of the playbook using --tags, or skip them using --skip-tags.
 
-## 🌐 Role: Nginx
+All major configuration files (such as homeserver.yaml) are written as Jinja2 templates, making them easy to customize prior to deployment.
+For example, user registration in Synapse is disabled by default to prevent unauthorized access.
+You can enable it by editing the following line in homeserver.yaml:
 
-- [x] Write a `nginx.conf.j2` template
-- [x] Configure reverse proxy for:
-- `/_matrix`
-- `/.well-known/matrix/client`
-- `/element`
-- [ ] Set up SSL (optional/self-signed if offline)
+enable_registration: false
 
----
 
-## 📞 Role: Coturn
+To manually register users using shared secret authentication, run:
 
-- [x] Create turnserver.conf template
-- [x] Expose port `3478` (UDP & TCP)
-- [x] Run Docker container for coturn
+docker exec -it synapse register_new_matrix_user \
+  -u yourusername -p yourpassword \
+  -a http://localhost:8008 \
+  --no-admin \
+  --shared-secret yoursharedsecret
 
----
 
-## 💬 Role: Synapse
+Coturn is also configured to support the TCP protocol.
+Ensuring that voice and video calls function reliably even in environments like Iran where UDP traffic may be restricted.
 
-- [x] Generate initial config using Docker (or provide template)
-- [x] Set SQLite DB path
-- [x] Configure `homeserver.yaml` (via Jinja template)
-- [x] Expose port `8008`
-- [x] Add support for custom domain and federation disabled
+SMTP settings have also been configured in Synapse, enabling email notifications such as password resets and account verification.
 
----
+After updating the hosts.yml, adjusting the configuration template files, and setting the appropriate variables,
+ you can run the Ansible playbook with:
 
-## 🧑‍💻 Role: Element
+ansible-playbook -i inventories/hosts.yml playbook.yml --ask-become-pass
 
-- [x] Download image (`vectorim/element-web`)
-- [x] Template `config.json`
-- [x] Mount it to `/app/config.json`
-- [x] Expose on Nginx as `/element/`
+
+Make sure all required variables are defined in your inventory files, group_vars, or defaults.
 
 ---
 
-## 🔐 TLS & Domains
+## License
 
-- [ ] Support for:
-- [ ] Self-signed certificates (for internal network)
-- [ ] Let’s Encrypt (optional, if public access exists)
-- [ ] Add a task for `/etc/hosts` editing (if no DNS)
+This project is licensed under the MIT License.
+You are free to use, modify, and distribute it with proper attribution.
 
 ---
 
-## 🚀 Deployment & Testing
+## Contact
 
-- [ ] Write `site.yml` to include all roles in correct order
-- [ ] Run playbook
-- [ ] Test access:
-- [ ] `https://chat.local/element`
-- [ ] Register new user
-- [ ] Try chat
-- [ ] Test voice/video calls (via Coturn)
+If you have any questions, suggestions, or feedback, feel free to reach out:
 
----
+Email: [ali99kalbasi82@gmail.com](mailto:ali99kalbasi82@gmail.com)
 
-## 📈 Future Improvements
-
-- [ ] Replace SQLite with PostgreSQL
-- [ ] Add monitoring (Prometheus/Grafana)
-- [ ] Add backup/restore scripts
-- [ ] Add registration token/approval system
+I'd be happy to hear from you!

@@ -7,3 +7,5 @@ coturn_container_name: coturn
 coturn_listen_port: 3478
 coturn_tls_listen_port: 5349
 coturn_realm: matrix.alch.com
+
+coturn_password: yourpass
