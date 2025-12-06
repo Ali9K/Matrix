@@ -7,6 +7,15 @@
     recurse: yes
   tags:
   - matrix
+  - nginx
+
+- name: Creates directory
+  ansible.builtin.file:
+    path: "{{ ssl_path }}"
+    state: directory
+  tags:
+  - matrix
+  - nginx
 
 - name: Template Nginx matrix.conf.j2
   template:

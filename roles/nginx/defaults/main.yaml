@@ -1,6 +1,7 @@
 nginx_config_dir: /opt/matrix/nginx
 nginx_image: nginx:1.29.0
 nginx_container_name: nginx-matrix
-nginx_host_port: 8000
+nginx_host_port: 80
 nginx_container_port: 80
 matrix_domain: matrix.alch.com
+ssl_path: /etc/letsencrypt/live/{{ matrix_domain }}
